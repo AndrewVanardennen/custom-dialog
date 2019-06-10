@@ -1,11 +1,14 @@
-import { define, ElementBase } from './base.js';
-
-export default define(class CustomDialog extends ElementBase {
+export default customElements.define('custom-dialog', class CustomDialog extends HTMLElement {
   constructor() {
     super();
+    this.attachShadow({mode:'open'});
+  }
+  connectedCallback() {
+    if (super.connectedCallback) super.connectedCallback();
+    this.shadowRoot.innerHTML = this.template;
   }
   get template() {
-    return html`
+    return `
 <style>
   :host {
     position: absolute;
@@ -30,4 +33,4 @@ export default define(class CustomDialog extends ElementBase {
   hide() {
     this.classlist.remove('opened');
   }
-})
+});
